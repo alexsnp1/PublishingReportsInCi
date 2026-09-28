@@ -73,6 +73,9 @@ jobs: # аналог этапов
           ref: gh-pages
           path: gh-pages
 
+      - name: Pull Allure Java image
+        run: docker pull public.ecr.aws/amazoncorretto/amazoncorretto:8
+
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.15
         if: always()
