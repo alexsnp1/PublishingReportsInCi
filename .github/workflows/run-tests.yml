@@ -59,7 +59,18 @@ jobs: # аналог этапов
           curl -L -o swagger-coverage.zip \
             https://github.com/viclovsky/swagger-coverage/releases/download/1.5.0/swagger-coverage-1.5.0.zip
           unzip -q swagger-coverage.zip
-          find . -maxdepth 4 -type f -name "swagger-coverage*" -print
+
+          echo "=== Current directory ==="
+          pwd
+
+          echo "=== Files ==="
+          find . -maxdepth 5 -type f -print
+
+          echo "=== Swagger Coverage directories ==="
+          find . -maxdepth 5 -type d -iname "*swagger*" -print
+
+          echo "=== Swagger Coverage executables ==="
+          find . -maxdepth 7 -type f -name "swagger-coverage-commandline" -print
 
       - name: Run Swagger coverage
         if: always()
