@@ -58,18 +58,21 @@ jobs: # аналог этапов
         run: |
           curl -L -o swagger-coverage.zip \
             https://github.com/viclovsky/swagger-coverage/releases/download/1.5.0/swagger-coverage-1.5.0.zip
-          unzip -q swagger-coverage.zip 
+          unzip -q swagger-coverage.zip
+          find . -maxdepth 4 -type f -name "swagger-coverage*" -print
 
-      - name: Run Swagger coverage
-        if: always()
-        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://localhost:4111/v3/api-docs -i target/swagger-coverage-output
+#      - name: Run Swagger coverage
+#        if: always()
+#        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://localhost:4111/v3/api-docs -i target/swagger-coverage-output
 
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
+        continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
+
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
@@ -92,4 +95,4 @@ jobs: # аналог этапов
 
       - name: Clean up services
         if: always()
-        run: cd infra/docker_compose && docker compose down
+        run: docker compose -f infra/docker_compose/docker-compose.yml down
