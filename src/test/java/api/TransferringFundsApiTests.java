@@ -168,4 +168,24 @@ public class TransferringFundsApiTests extends BaseTest {
         softly.assertThat(TestUtils.findAccountById(accountsOld, user1Id2).getBalance())
                 .isEqualTo(TestUtils.findAccountById(accountsNew, user1Id2).getBalance(), offset(MONEY_ASSERT_DELTA));
     }
+
+    @Test
+    public void unauthorizedUserCannotTransferFunds() {
+        TransferFundsRequest transferFundsRequest = TransferFundsRequest.builder()
+                .senderAccountId(user1Id1).receiverAccountId(user1Id2).amount(TRANSFER_AMOUNT).build();
+        new CrudRequester(RequestSpecs.unAuthSpec(),
+                Endpoint.ACCOUNTS_TRANSFER,
+                ResponseSpecs.unauthorizedUser())
+                .post(transferFundsRequest);
+    }
+
+    @Test
+    public void userCannotTransferFundsFromNonExistentAccountId() {
+        TransferFundsRequest transferFundsRequest = TransferFundsRequest.builder()
+                .senderAccountId(NON_EXISTENT_ACCOUNT_ID).receiverAccountId(NON_EXISTENT_ACCOUNT_ID).amount(TRANSFER_AMOUNT).build();
+        new CrudRequester(RequestSpecs.userAuthSpec(authTokenUser1),
+                Endpoint.ACCOUNTS_TRANSFER,
+                ResponseSpecs.unauthorizedAccountAccess())
+                .post(transferFundsRequest);
+    }
 }

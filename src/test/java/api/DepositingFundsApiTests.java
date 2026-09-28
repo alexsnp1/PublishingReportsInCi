@@ -101,4 +101,14 @@ public class DepositingFundsApiTests extends BaseTest {
                 ResponseSpecs.unauthorizedAccountAccess())
                 .post(depositFundsRequest);
     }
+
+    @Test
+    public void unauthorizedUserCannotDepositFunds() {
+        DepositFundsRequest depositFundsRequest = DepositFundsRequest.builder()
+                .id(user2Id1).balance(DEPOSIT_AMOUNT).build();
+        new CrudRequester(RequestSpecs.unAuthSpec(),
+                Endpoint.ACCOUNTS_DEPOSIT,
+                ResponseSpecs.unauthorizedUser())
+                .post(depositFundsRequest);
+    }
 }

@@ -73,5 +73,15 @@ public class ResponseSpecs {
                 .expectBody(equalTo("Unauthorized access to account"))
                 .build();
     }
+    public static ResponseSpecification forbidden() {
+        return defaultResponseBuilder()
+                .expectStatusCode(HttpStatus.SC_FORBIDDEN)
+                .build();
+    }
+    public static ResponseSpecification unauthorizedUser() {
+        return defaultResponseBuilder()
+                .expectStatusCode(HttpStatus.SC_UNAUTHORIZED)
+                .build();
+    }
 
 }

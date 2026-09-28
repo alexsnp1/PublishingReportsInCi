@@ -40,6 +40,10 @@ public class RandomData {
 
         return getRandomLetters(firstNameLength) + getRandomLetters(lastNameLength);
     }
+    public static String getRandomString() {
+        int length = ThreadLocalRandom.current().nextInt(1, 3);
+        return getRandomLetters(length);
+    }
 
     private static String getRandomLetters(int length) {
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
