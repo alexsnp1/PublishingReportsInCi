@@ -12,7 +12,7 @@ import io.restassured.specification.ResponseSpecification;
 import static io.restassured.RestAssured.given;
 
 public class CrudRequester extends HttpRequest implements CrudEndpointInterface {
-    private final static String API_VERSION = Config.getProperty("apiVersion");
+    private static final String API_VERSION = Config.getProperty("apiVersion");
 
     public CrudRequester(RequestSpecification requestSpecification, Endpoint endpoint,
                          ResponseSpecification responseSpecification) {
