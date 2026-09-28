@@ -61,9 +61,9 @@ jobs: # аналог этапов
           unzip -q swagger-coverage.zip
           find . -maxdepth 4 -type f -name "swagger-coverage*" -print
 
-#      - name: Run Swagger coverage
-#        if: always()
-#        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://localhost:4111/v3/api-docs -i target/swagger-coverage-output
+      - name: Run Swagger coverage
+        if: always()
+        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://localhost:4111/v3/api-docs -i target/swagger-coverage-output
 
       - name: Load test report history
         uses: actions/checkout@v4
